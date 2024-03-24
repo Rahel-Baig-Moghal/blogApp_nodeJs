@@ -1,4 +1,4 @@
-# Node.js File Upload and Management Project
+# NodeJs File Upload and Management Project
 
 This is a Node.js project that allows users to upload images with accompanying stories. The uploaded images and stories are stored in a JSON file for later retrieval and display.
 
