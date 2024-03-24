@@ -43,6 +43,11 @@ Before running this project, you need to have the following installed:
 └── stories.json # JSON file to store uploaded images and stories
 ```
 
+
 ## Author
 
 Rahel Baig Moghal
+
+## Deployment
+
+This project is deployed on [Render](https://blogapp-nodejs.onrender.com).
