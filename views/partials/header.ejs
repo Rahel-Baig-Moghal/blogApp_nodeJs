@@ -23,38 +23,36 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" data-bs-toggle="modal" data-bs-target="#exampleModal" >Upload</a>
                   </li>
-
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Write a short story</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
-                            <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="file">
-                            </div>
-                            <div class="input-group">
-                                <textarea class="form-control" aria-label="With textarea" name="story"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                        
-                      </div>
-                    </div>
-                  </div>
+                </ul>
               </div>
             </div>
           </nav>
     </header>
 
-
-    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Write a short story</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="inputGroupFile02" name="file">
+                </div>
+                <div class="input-group">
+                    <textarea class="form-control" aria-label="With textarea" name="story"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
