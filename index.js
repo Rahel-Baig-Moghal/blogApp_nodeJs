@@ -2,10 +2,9 @@ import express from "express";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-
-let finalFilename = '';
+let finalFilename = "";
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
@@ -15,16 +14,11 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const uniqueFilename = uuidv4();
     const originalFilename = file.originalname;
-    const extension = originalFilename.split('.').pop();
+    const extension = originalFilename.split(".").pop();
     finalFilename = `${uniqueFilename}.${extension}`; // Store finalFilename in the outer scope
     cb(null, finalFilename);
   },
 });
-
-
-
-
-
 
 const upload = multer({ storage });
 
@@ -47,7 +41,14 @@ app.get("/", (req, res) => {
     }
 
     const imageFiles = files.filter(
-      (file) => file.endsWith(".jpg") || file.endsWith(".png")
+      (file) =>
+        file.endsWith(".jpg") ||
+        file.endsWith(".jpeg") ||
+        file.endsWith(".png") ||
+        file.endsWith(".gif") ||
+        file.endsWith(".bmp") ||
+        file.endsWith(".webp") ||
+        file.endsWith(".svg")
     );
 
     // Read the stories.json file
@@ -72,7 +73,6 @@ app.get("/", (req, res) => {
   });
 });
 
-
 // Route for handling file upload
 app.post("/upload", upload.single("file"), (req, res) => {
   // Check if a file was uploaded
@@ -93,8 +93,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
   // Check if any story already exists for the uploaded image
   const existingStoryIndex = storiesData.findIndex(
-    (storyObj) =>
-      Object.keys(storyObj)[0] === "public/uploads/" + finalFilename
+    (storyObj) => Object.keys(storyObj)[0] === "public/uploads/" + finalFilename
   );
 
   if (existingStoryIndex !== -1) {
@@ -117,14 +116,13 @@ app.post("/upload", upload.single("file"), (req, res) => {
   });
 });
 
-
 // Route for handling file deletion
 app.post("/delete", (req, res) => {
   const { image } = req.body;
   console.log("Deleting image:", image);
 
   // Read the stories.json file
-  fs.readFile('stories.json', 'utf8', (err, data) => {
+  fs.readFile("stories.json", "utf8", (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send("Error reading file");
@@ -135,46 +133,47 @@ app.post("/delete", (req, res) => {
     let stories = JSON.parse(data);
 
     // Find the index of the object with the specified image
-    const index = stories.findIndex((story) => Object.keys(story)[0] === 'public/uploads/' + image);
+    const index = stories.findIndex(
+      (story) => Object.keys(story)[0] === "public/uploads/" + image
+    );
 
     if (index !== -1) {
       // Remove the object from the array
       stories.splice(index, 1);
 
       // Delete the image file from the filesystem
-      fs.unlink('public/uploads/' + image, (err) => {
+      fs.unlink("public/uploads/" + image, (err) => {
         if (err) {
           console.error(err);
           res.status(500).send("Error deleting file");
           return;
         }
 
-        console.log('File is deleted.');
+        console.log("File is deleted.");
 
         // Write the updated array back to the stories.json file
-        fs.writeFile('stories.json', JSON.stringify(stories, null, 2), 'utf8', (err) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send("Error updating file");
-            return;
-          }
+        fs.writeFile(
+          "stories.json",
+          JSON.stringify(stories, null, 2),
+          "utf8",
+          (err) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send("Error updating file");
+              return;
+            }
 
-          console.log('File is updated.');
-          res.redirect("/");
-        });
+            console.log("File is updated.");
+            res.redirect("/");
+          }
+        );
       });
     } else {
-      console.log('Image not found in stories.json');
+      console.log("Image not found in stories.json");
       res.status(404).send("Image not found in stories.json");
     }
   });
 });
-
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on ${port}`);
